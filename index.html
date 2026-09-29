@@ -298,42 +298,6 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent)}
         <p class="hint" id="backupInfo"></p>
       </div>
 
-      <!-- ==== 双端同步卡片 START ====（用户选单设备时删掉这张卡） -->
-      <div class="card wide" id="syncCard">
-        <h2>🔄 双端同步 <span class="hint" id="syncState" style="margin:0 0 0 auto;font-size:var(--fs-meta)"></span></h2>
-        <div id="syncOff">
-          <p class="hint" style="margin-top:0">
-            开启后手机和电脑登同一个账号，记的东西自动对齐。<br>
-            <b>数据会在你的设备和云端各存一份</b>，本地那份始终在，断网照样能记。<br>
-            云端那份是明文的——只有知道你密码的人能读，但平台运维理论上能看到。<br>
-            <b>密码忘了就进不去了，没有找回功能。</b>
-          </p>
-          <div style="margin-top:14px">
-            <input type="text" id="syncUser" placeholder="用户名（3-32 个字符，只用来定位你的数据）" autocomplete="username">
-          </div>
-          <div style="margin-top:10px">
-            <input type="password" id="syncPass" placeholder="密码（至少 8 位）" autocomplete="new-password">
-          </div>
-          <div class="row" style="margin-top:14px">
-            <button class="btn" onclick="Settings.enableSync()">开启同步</button>
-            <button class="btn ghost" onclick="Store.exportFile()">先导出备份</button>
-          </div>
-          <p class="hint">建议先导出一份备份再开——万一以后忘了密码，本地这份还在。</p>
-        </div>
-        <div id="syncOn" style="display:none">
-          <p class="hint" style="margin-top:0">账号：<b id="syncWho" class="mono"></b><br>上次同步：<span id="syncTime"></span></p>
-          <div class="row" style="margin-top:14px">
-            <button class="btn" onclick="Sync.pull(true)">立即同步</button>
-            <button class="btn ghost" onclick="Settings.changePass()">改密码</button>
-            <button class="btn ghost" onclick="Sync.disable()">关闭同步</button>
-          </div>
-          <p class="hint">
-            在另一台设备改完后，回到这里可点「立即同步」立即拉取最新数据。
-          </p>
-        </div>
-      </div>
-      <!-- ==== 双端同步卡片 END ==== -->
-
       <!-- 有联网功能时保留这张卡，没有就删掉 -->
       <div class="card" id="apiCard">
         <h2>🔑 接口配置</h2>
@@ -740,36 +704,11 @@ const Settings = {
 
   render(){
     this.refreshBackupInfo();
-    this.renderSync();
     this.keys.forEach(k => {
       const el = document.getElementById('key_' + k);
       if (el) el.value = Store.getSecret(k) || '';
     });
     if (!this.keys.length) document.getElementById('apiCard')?.remove();
-  },
-
-  enableSync(){
-    Sync.enable(document.getElementById('syncUser').value,
-                document.getElementById('syncPass').value);
-  },
-
-  changePass(){
-    const np = prompt('输入新密码（至少 8 位）');
-    if (np) Sync.changePass(np);
-  },
-
-  renderSync(){
-    const card = document.getElementById('syncCard');
-    if (!card || typeof Sync === 'undefined') return;
-    const on = Sync.on();
-    document.getElementById('syncOff').style.display = on ? 'none' : 'block';
-    document.getElementById('syncOn').style.display  = on ? 'block' : 'none';
-    if (on) {
-      document.getElementById('syncWho').textContent = Sync.cfg().user;
-      const t = Store.get('_syncAt');
-      document.getElementById('syncTime').textContent =
-        t ? new Date(t).toLocaleString('zh-CN') : '还没同步过';
-    }
   },
 
   saveKeys(){
