@@ -1,0 +1,11 @@
+{
+  "appId": "com.peter.dashboard",
+  "appName": "Peter 的工作台",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": false
+  }
+}

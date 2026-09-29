@@ -190,6 +190,37 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent)}
 .item.done .box{animation:pop .22s var(--ease)}
 @keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.18)}100%{transform:scale(1)}}
 
+/* ════════ 安卓手机：内容全宽 + 底部导航 ════════
+   手机上不再把电脑侧栏缩窄硬塞进来；最常用的五个入口始终在拇指够得到的位置。 */
+@media (max-width:699px){
+  body{overflow:hidden;background:#f4eee6}
+  .app{display:block}
+  .side{
+    position:fixed;z-index:20;left:0;right:0;bottom:0;width:100%;height:auto;
+    display:block;padding:7px 8px calc(7px + env(safe-area-inset-bottom,0));
+    background:rgba(255,253,249,.96);border-top:1px solid var(--line);
+    box-shadow:0 -6px 20px rgba(72,54,37,.08);overflow:visible;
+  }
+  .brand{display:none}
+  .nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}
+  .nav button{padding:5px 1px 4px;border-radius:10px;font-size:11px;line-height:1.15;color:var(--sidebar-text)}
+  .nav button .ico{font-size:20px;margin:0 0 2px;line-height:1.1}
+  .nav button.on{background:#efe5d7;color:var(--accent);font-weight:600}
+  .main{height:100%;padding:18px 16px calc(94px + env(safe-area-inset-bottom,0));overflow-y:auto}
+  .page{gap:14px}
+  .page-title{font-size:27px;font-weight:600;margin-top:2px}
+  .page-sub{font-size:14px;margin-top:-8px}
+  .card{border-radius:18px;padding:18px}
+  .banner{border-radius:16px;padding:12px 14px;font-size:14px}
+  .summary-row{gap:15px;align-items:center}
+  .ring{width:112px;height:112px;flex:0 0 112px}
+  .ring:before{inset:13px}
+  .ring b{font-size:29px}.ring small{font-size:11px}
+  .summary-note{font-size:15px;line-height:1.65}
+  .habit-grid{gap:10px}.habit{min-height:105px;padding:14px}
+  .toast{bottom:calc(86px + env(safe-area-inset-bottom,0));max-width:calc(100vw - 32px);text-align:center}
+}
+
 /* 用户在系统里关了动效就一律不放 —— 这不是可选项 */
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important;animation-delay:0s !important;
