@@ -1,0 +1,19 @@
+{
+  "name": "Peter 的工作台",
+  "short_name": "Peter",
+  "description": "任务、健康习惯与每周 AI 复盘",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ebe3d9",
+  "theme_color": "#f5f0e8",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
